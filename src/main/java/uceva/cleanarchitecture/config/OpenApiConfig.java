@@ -18,7 +18,7 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("API Client Server Spring Boot - Clean Architecture")
                         .version("1.0.0")
-                        .description("Documentación OpenAPI interactiva de los servicios REST de usuarios, productos y junglers de League of Legends.")
+                        .description("Documentación OpenAPI interactiva de los servicios REST de usuarios, productos, personajes, junglers de League of Legends y canciones.")
                         .contact(new Contact().name("UCEVA Software Architecture")));
     }
 }
