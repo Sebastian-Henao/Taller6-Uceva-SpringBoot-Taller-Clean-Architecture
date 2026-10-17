@@ -108,7 +108,7 @@ src/main/java/uceva/cleanarchitecture/config/
 
 ## Ejecución
 
-Requisitos: JDK 25. Desde la raíz del proyecto:
+Requisitos: JDK 22. Desde la raíz del proyecto:
 
 ```powershell
 .\gradlew.bat bootRun
