@@ -87,9 +87,27 @@ src/main/java/uceva/cleanarchitecture/config/
 
 # Funcionamiento del Backend
 
+## Ejecutar Backend
+```bash
+./gradlew bootRun
+```
+
 ## Urls Consumo
 ```
-http://localhost:3000/api/swagger-ui/index.html
+http://localhost:8080/api/swagger-ui/index.html
 http://localhost:8080/api/users/{countUsers}
 http://localhost:8080/api/products/{countProducts}
+http://localhost:8080/api/junglers/{countJunglers}
 ```
+
+## Módulo: Junglers (League of Legends)
+Módulo implementado con Clean Architecture y Spring Boot que expone información de los 20 campeones emblemáticos de la jungla de League of Legends con datos en memoria.
+
+- **Entidad de Dominio:** `uceva.cleanarchitecture.domain.entity.Jungler`
+- **Contrato del Repositorio:** `uceva.cleanarchitecture.domain.repository.JunglerRepository`
+- **Caso de Uso:** `uceva.cleanarchitecture.application.usecase.GetAllJunglersUseCase`
+- **Datasource en Memoria:** `uceva.cleanarchitecture.infrastructure.datasource.JunglerDatasource`
+- **Implementación del Repositorio:** `uceva.cleanarchitecture.infrastructure.repository.JunglerRepositoryImpl`
+- **Controlador REST:** `uceva.cleanarchitecture.infrastructure.controller.JunglerController`
+- **Configuración de Dependencias:** `uceva.cleanarchitecture.config.AppConfig`
+- **Configuración OpenAPI / Swagger:** `uceva.cleanarchitecture.config.OpenApiConfig`
