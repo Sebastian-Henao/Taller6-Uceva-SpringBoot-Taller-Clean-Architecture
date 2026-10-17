@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Genera datos de ejemplo para los personajes utilizando Java Faker.
+ */
 public class PersonajeDatasource {
 
     private Faker faker = new Faker();
@@ -19,6 +22,12 @@ public class PersonajeDatasource {
             "Explorador",
     };
 
+    /**
+     * Genera una lista con la cantidad de personajes solicitada.
+     *
+     * @param countPersonajes cantidad de personajes que se desea generar
+     * @return lista de personajes de ejemplo
+     */
     public List<Personaje> getAll(int countPersonajes) {
         List<Personaje> personajes = new ArrayList<Personaje>();
         for (int i = 1; i <= countPersonajes; i++) {
