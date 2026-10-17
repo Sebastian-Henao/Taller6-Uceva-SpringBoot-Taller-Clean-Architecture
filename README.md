@@ -1,95 +1,75 @@
-# Clean Architecture en SpringBoot
+# Backend Spring Boot con Clean Architecture
 
-```
-src/main/java/uceva/cleanarchitecture
-│
-├── domain
-│   ├── entity/
-│   │   ├── User.java
-│   │   └── Product.java
-│   │
-│   └── repository/
-│       ├── UserRepository.java
-│       └── ProductRepository.java
-│
-├── application
-│   └── usecase/
-│       ├── GetAllUsersUseCase.java
-│       └── GetAllProductsUseCase.java
-│
-├── infrastructure
-│   ├── controller/
-│   │   ├── UserController.java
-│   │   └── ProductController.java
-│   │
-│   ├── repository/
-│   │   ├── UserRepositoryImpl.java
-│   │   └── ProductRepositoryImpl.java
-│   │
-│   └── datasource/
-│       ├── UserDatasource.java
-│       └── ProductDatasource.java
-│
-├── config
-│   └── AppConfig.java
-│
-└── UcevaSprinBootTallerCleanArchitectureApplication.java
+Backend REST construido con Spring Boot y organizado en capas de dominio,
+aplicación e infraestructura. Incluye módulos para usuarios, productos,
+personajes, junglers de League of Legends y canciones.
+
+## Requisitos
+
+- JDK 22
+
+## Ejecución
+
+Desde la raíz del repositorio:
+
+```powershell
+.\gradlew.bat bootRun
 ```
 
+Ejecutar las pruebas:
 
-## Paso 1 - Crear Entidades
-
-```
-src/main/java/uceva/cleanarchitecture/domain/entity
-├── User.java
-└── Product.java
+```powershell
+.\gradlew.bat test
 ```
 
-## Paso 2 - Crear Repositorios
+## Documentación OpenAPI
 
-```
-src/main/java/uceva/cleanarchitecture/domain/repositories/
-├── UserRepository.java
-└── ProductRepository.java
+Con la aplicación en ejecución:
+
+- Swagger UI: <http://localhost:8080/api/swagger-ui/index.html>
+- Especificación OpenAPI: <http://localhost:8080/api/v3/api-docs>
+
+## Endpoints
+
+Las rutas usan el prefijo `/api`.
+
+| Método | Ruta | Descripción |
+| --- | --- | --- |
+| `GET` | `/api/users/{countUsers}` | Genera la cantidad indicada de usuarios |
+| `GET` | `/api/products/{countProducts}` | Genera la cantidad indicada de productos |
+| `GET` | `/api/personajes/{countPersonajes}` | Genera la cantidad indicada de personajes |
+| `GET` | `/api/junglers/{countJunglers}` | Genera la cantidad indicada de campeones junglers |
+| `GET` | `/api/songs` | Lista las canciones |
+| `GET` | `/api/songs/{id}` | Consulta una canción por ID |
+| `POST` | `/api/songs` | Crea una canción (`201 Created`) |
+| `PUT` | `/api/songs/{id}` | Actualiza una canción |
+| `DELETE` | `/api/songs/{id}` | Elimina una canción (`204 No Content`) |
+
+Los datos de canciones se almacenan en memoria y se reinician al detener la
+aplicación. `artistId` y `albumId` deben ser enteros positivos; la API no
+verifica su existencia en otros módulos.
+
+Ejemplo de cuerpo para crear o actualizar una canción:
+
+```json
+{
+  "title": "Numb",
+  "durationSeconds": 185,
+  "genre": "Rock",
+  "artistId": 1,
+  "albumId": 2
+}
 ```
 
-## Paso 3 - Crear Casos de Uso
+Las solicitudes de canciones inválidas responden `400 Bad Request`; cuando no
+existe el ID solicitado, la API responde `404 Not Found`.
 
-```
-src/main/java/uceva/cleanarchitecture/application/usecase/
-├── GetAllUsersUseCase.java
-└── GetAllProductsUseCase.java
-```
+## Arquitectura
 
-## Paso 4 - Crear Controllers
+Cada módulo sigue el patrón Clean Architecture:
 
-
-```
-src/main/java/uceva/cleanarchitecture/infrastructure/controllers/
-├── UserController.java
-└── ProductController.java
-```
-
-## Paso 5 - Crear Repositorios Implementadores
-
-```
-src/main/java/uceva/cleanarchitecture/infrastructure/repository/
-├── UserRepositoryImpl.java
-└── ProductRepositoryImpl.java
-```
-
-## Paso 6 - Agregar la Inyección de Dependencias
-
-```
-src/main/java/uceva/cleanarchitecture/config/
-└── AppConfig.java
-```
-
-# Funcionamiento del Backend
-
-## Urls Consumo
-```
-http://localhost:3000/api/swagger-ui/index.html
-http://localhost:8080/api/users/{countUsers}
-http://localhost:8080/api/products/{countProducts}
-```
+- `domain`: entidades y contratos de repositorio.
+- `application`: casos de uso.
+- `infrastructure`: controladores REST, fuentes de datos y adaptadores de
+  repositorio.
+- `config`: configuración de dependencias e integración OpenAPI.
